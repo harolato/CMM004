@@ -72,12 +72,13 @@ class DATABASE_CONFIG {
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'haroldas',
-		'password' => '123456',
+		'login' => 'root',
+		'password' => '',
 		'database' => 'cake',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
+	
 
 	public $test = array(
 		'datasource' => 'Database/Mysql',

@@ -67,13 +67,13 @@
  * A key/value array of driver specific connection options.
  */
 class DATABASE_CONFIG {
-
+// Fill in you localhost dabatabase information
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'haroldas',
-		'password' => '123456',
+		'login' => 'root',
+		'password' => '',
 		'database' => 'cake',
 		'prefix' => '',
 		//'encoding' => 'utf8',

@@ -48,4 +48,30 @@ class TasksController extends AppController {
             $this->set('iteration_id', $theTask['iteration_id']);
         }
     }
+
+    public function displayAll() {
+        $taskSet = $this->Task->find('all');
+
+        foreach ($taskSet as &$task) {
+            $this->set('task' . $task['id'], $task); // returns each task as a array
+
+            // return every task field as separate variable (var name = field_name + task_id)
+            //foreach ($task as $key=>$value) {
+            //    $this->set($key.$task['id'], $value);
+            //}
+        }
+    }
+
+    public function update() {
+        $taskData = $this->request->data['Task'];
+        $this->Task->save($taskData);
+    }
+
+    public function remove() {
+        $id = $this->request->data['Task']['id'];
+
+        if ($id != NULL) {
+            $this->Task->delete($id);
+        }
+    }
 }

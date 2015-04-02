@@ -31,4 +31,34 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
+
+
+
+    public $components = ['Session','Auth'];
+
+    public function beforeFilter() {
+        if ( $this->Auth->user() ) {
+            debug($this->Auth->user());
+        }
+
+        // Authorisation setup
+        $this->Auth->loginAction = ['controller' => 'Users', 'action' => 'login'];
+        $this->Auth->logoutRedirect = '/';
+        $this->Auth->authError = "Not allowed! Staff";
+        $this->Auth->authorize = ["Controller"];
+        $this->Auth->authenticate = ['Form' => [
+            'fields' => [
+                'username' => 'id'
+                ]
+            ]
+        ];
+        $this->Auth->unauthorizedRedirect = ['controller' => 'Users' , 'action' => 'index'];
+
+        $this->Auth->allow('index', 'view', 'login');
+    }
+
+    public function isAuthorized() {
+        return true;
+    }
+
 }

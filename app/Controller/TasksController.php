@@ -29,7 +29,10 @@ class TasksController extends AppController {
     }
 
 
-    public function display($id) {
+    public function display() {
+
+        $id = $this->request->data['Task']['id'];
+
         $theTask = $this->Task->find('first', array(
                 'conditions' => array(
                     'id' => $id)

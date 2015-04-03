@@ -36,8 +36,14 @@ class AppController extends Controller {
 
     public $components = ['Session','Auth'];
 
+
+    /**
+     * This function is being executed every time you load a page
+     */
     public function beforeFilter() {
+        // Check if you're logged in
         if ( $this->Auth->user() ) {
+            // Display array of user related data
             debug($this->Auth->user());
         }
 

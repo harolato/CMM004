@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Haroldas
+ * User: Haroldas Latonas
  * Date: 02/04/15
  * Time: 14:25
  */
@@ -44,7 +44,8 @@ class UsersController extends AppController {
             // Try to log user in
             if ($this->Auth->login()) {
                 // if successful redirect to restricted zone
-                return $this->redirect($this->Auth->redirectUrl());
+                $this->Session->setFlash(__('Logged in!'));
+                return $this->redirect($this->Auth->redirect());
             }
             // Otherwise display error message
             $this->Session->setFlash(__('Invalid username or password, try again'));

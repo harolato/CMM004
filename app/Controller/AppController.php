@@ -50,17 +50,21 @@ class AppController extends Controller {
         // Authorisation setup
         $this->Auth->loginAction = ['controller' => 'Users', 'action' => 'login'];
         $this->Auth->logoutRedirect = '/';
-        $this->Auth->authError = "Not allowed! Staff";
+        $this->Auth->authError = "Not allowed!";
         $this->Auth->authorize = ["Controller"];
         $this->Auth->authenticate = ['Form' => [
-            'fields' => [
-                'username' => 'id'
-                ]
-            ]
+        		'passwordHasher' => [
+        			'className' => 'Simple'
+        		],
+        		'fields' => [
+        			'username' => 'id',
+        			'password' => 'password'
+        		]
+        	]
         ];
         $this->Auth->unauthorizedRedirect = ['controller' => 'Users' , 'action' => 'index'];
 
-        $this->Auth->allow('index', 'view', 'login');
+        $this->Auth->allow('index', 'login');
     }
 
     public function isAuthorized() {

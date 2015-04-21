@@ -45,7 +45,7 @@ class UsersController extends AppController {
             if ($this->Auth->login()) {
                 // if successful redirect to restricted zone
                 $this->Session->setFlash(__('Logged in!'));
-                return $this->redirect($this->Auth->redirect());
+                return $this->redirect($this->Auth->redirectUrl());
             }
             // Otherwise display error message
             $this->Session->setFlash(__('Invalid username or password, try again'));

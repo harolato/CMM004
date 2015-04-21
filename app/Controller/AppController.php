@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
 
-
+    public $uses = ['User','ProjectAllocation', 'TaskAllocation'];
     public $components = ['Session','Auth'];
 
 
@@ -44,12 +44,14 @@ class AppController extends Controller {
         // Check if you're logged in
         if ( $this->Auth->user() ) {
             // Display array of user related data
-            debug($this->Auth->user());
+            debug($this->ProjectAllocation->findAllByUserId($this->Auth->user('id')));
+            debug($this->TaskAllocation->findAllByUserId($this->Auth->user('id')));
         }
 
         // Authorisation setup
         $this->Auth->loginAction = ['controller' => 'Users', 'action' => 'login'];
         $this->Auth->logoutRedirect = '/';
+        $this->Auth->loginRedirect = ['controller' => 'Users', 'action' => 'index'];
         $this->Auth->authError = "Not allowed!";
         $this->Auth->authorize = ["Controller"];
         $this->Auth->authenticate = ['Form' => [

@@ -7,14 +7,14 @@
  */
 App::uses('Model', 'Model');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
-class Task extends Model {
+class Project extends Model {
 
-    public $name = 'Task';
+    public $name = 'Project';
 
     public $belongsTo = [
-        'Tasks_allocations' => [
-            'className' => 'TaskAllocation',
-            'foreignKey' => 'task_id'
+        'Projects_allocations' => [
+            'className' => 'ProjectAllocation',
+            'foreignKey' => 'project_id'
         ]
     ];
 

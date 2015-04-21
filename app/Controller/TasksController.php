@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: zen
+ * User: Bart Wlizlo
  * Date: 2015-03-31
  * Time: 11:32
  */

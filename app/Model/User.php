@@ -11,6 +11,16 @@ class User extends Model {
 
     public $name = 'User';
 
+    public $hasMany = [
+        'Projects_allocations' => [
+            'className' => 'ProjectAllocation',
+            'foreignKey' => 'user_id'
+        ],
+        'Tasks_allocations' => [
+            'className' => 'TaskAllocation',
+            'foreignKey' => 'user_id'
+        ]
+    ];
 
     public function beforeSave($options = array()) {
         // Encrypt password with built-in password hasher.

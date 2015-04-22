@@ -21,30 +21,4 @@ class Task extends Model {
         ]
     ];
 
-    public function getUserTasks($user_id) {
-
-    }
-
-    public function getProjectTasks($project_id) {
-        $data = $this->find('all',[
-           'conditions' => '`Task`.`project_id` = ' . $project_id,
-            'joins' => [
-                [
-                    'alias' => 'Allocation',
-                    'table' => 'tasks_allocations',
-                    'type' => 'LEFT',
-                    'conditions' => '`Allocation`.`task_id` = `Task`.`id`'
-                ],
-                [
-                    'alias' => 'User',
-                    'table' => 'users',
-                    'type' => 'LEFT',
-                    'conditions' => '`User`.`id` = `Allocation`.`user_id`'
-                ]
-
-            ]
-        ]);
-        return $data;
-    }
-
 }

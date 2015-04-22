@@ -8,24 +8,23 @@
 
 class TasksController extends AppController {
 
-    public function add($id, $project_id, $name, $description, $points, $state, $iteration_id) {
-        $currentDate = date('Y-m-d H:i:s');
-
-        $taskData = array (
-            'Task' => array (
-                'id' => $id,
-                'project_id' => $project_id,
-                'name' => $name,
-                'description' => $description,
-                'points' => $points,
-                'state' => $state,
-                'date_added' => $currentDate,
-                'date_completed' => null,
-                'iteration_id' => $iteration_id
-            )
-        );
-
-        $this->Task->save($taskData);
+    /**
+     * @param $id
+     * @param $project_id
+     * @param $name
+     * @param $description
+     * @param $points
+     * @param $state
+     * @param $iteration_id
+     */
+    public function add($project_id) {
+        if ( $this->request->is('post') ) {
+            $currentDate = date('Y-m-d H:i:s');
+            $data = $this->request->data;
+            $data['Task']['project_id'] = $project_id;
+            $data['Task']['date_added'] = $currentDate;
+            $this->Task->save($data);
+        }
     }
 
 
@@ -70,11 +69,40 @@ class TasksController extends AppController {
         $this->Task->save($taskData);
     }
 
-    public function remove() {
-        $id = $this->request->data['Task']['id'];
+    public function signOffTask( $task_id ) {
+        $data['Task']['id'] = $task_id;
+        $data['Task']['state'] = 'complete';
+        $data['Task']['date_completed'] = date('Y-m-d H:i:s');
+        $this->Task->save($data);
+    }
 
-        if ($id != NULL) {
-            $this->Task->delete($id);
+    public function writeNote( $allocation_id ) {
+
+        if ( $this->request->is('post') ) {
+            $data['TasksUser']['id'] = $allocation_id;
+            $data['TasksUser']['notes'] = $this->request->data['TasksUser']['notes'];
+            $this->Task->TasksUser->save(data);
+        } else {
+            $this->data = $this->Task->TasksUser->find('first', [
+                'conditions' => [
+                    'id' => $allocation_id
+                ]
+            ]);
         }
+    }
+
+    public function remove($task_id) {
+        if ($task_id != NULL) {
+            $this->Task->delete($task_id);
+        }
+    }
+
+    public function assign($task_id, $user_id) {
+        $data['User']['id'] = $user_id;
+        $data['Task']['id'] = $task_id;
+        return $this->Task->save($data);
+    }
+    public function unassign($allocation_id) {
+        return $this->Task->TasksUser->delete($allocation_id,false);
     }
 }

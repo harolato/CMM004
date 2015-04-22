@@ -11,7 +11,7 @@ class TaskAllocation extends Model {
 
     public $name = 'TaskAllocation';
     public $useTable = 'tasks_allocations';
-    public $hasOne = [
+    public $belongsTo = [
         'Task' => [
             'className' => 'Task',
             'foreignKey' => 'id'

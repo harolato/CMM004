@@ -11,10 +11,13 @@ class Project extends Model {
 
     public $name = 'Project';
 
-    public $belongsTo = [
-        'Projects_allocations' => [
-            'className' => 'ProjectAllocation',
-            'foreignKey' => 'project_id'
+    public $hasAndBelongsToMany = [
+        'User' => [
+            'className' => 'User',
+            'joinTable' => 'projects_users',
+            'foreignKey' => 'project_id',
+            'associationForeignKey' => 'user_id',
+            'unique' => true
         ]
     ];
 

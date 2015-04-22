@@ -47,6 +47,16 @@ class PagesController extends AppController {
 	public function display() {
 		$path = func_get_args();
 
+        if ( $path[0] == "burndown" ) {
+            $project_id = $path[1];
+            unset($path[1]);
+            $this->Task->recursive = -1;
+            $this->set('burndown_data', $this->Task->findAllByProjectIdAndState($project_id, 'complete',[],[
+                'Task.date_completed' => 'ASC'
+            ]));
+            $this->set('project', $this->Project->findAllById($project_id,['start_date','points']));
+        }
+
 		$count = count($path);
 		if (!$count) {
 			return $this->redirect('/');

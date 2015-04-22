@@ -12,12 +12,11 @@ class UsersController extends AppController {
     public $uses = ['User']; // Select which model to use
     public $helpers = ['Form']; // List of helpers we will use
 
-
     /**
      *    Default action of the Users controller
      */
     public function index() {
-
+        $this->set('projects_users',$this->User->findAllById($this->Auth->user('id')));
     }
     /**
      *   Create user action
@@ -64,5 +63,21 @@ class UsersController extends AppController {
      */
     public function delete($id) {
         // Fetch user ID from url $id.
+    }
+
+    public function isAuthorized($user) {
+        //debug($user);
+        if ( $this->action == 'login' && !is_null($user) ) {
+            return false;
+        }
+        return parent::isAuthorized($user);
+    }
+
+    public function beforeFilter() {
+        parent::beforeFilter();
+//        debug();
+        if ( $this->Auth->user() ) {
+            $this->Auth->deny(['login']);
+        }
     }
 }

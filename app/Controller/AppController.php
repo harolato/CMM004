@@ -33,7 +33,7 @@ App::uses('Controller', 'Controller');
 class AppController extends Controller {
 
 
-    public $uses = ['User','ProjectAllocation', 'TaskAllocation'];
+    public $uses = ['User','Task', 'Project'];
     public $components = ['Session','Auth'];
 
 
@@ -41,12 +41,7 @@ class AppController extends Controller {
      * This function is being executed every time you load a page
      */
     public function beforeFilter() {
-        // Check if you're logged in
-        if ( $this->Auth->user() ) {
-            // Display array of user related data
-            debug($this->ProjectAllocation->findAllByUserId($this->Auth->user('id')));
-            debug($this->TaskAllocation->findAllByUserId($this->Auth->user('id')));
-        }
+
 
         // Authorisation setup
         $this->Auth->loginAction = ['controller' => 'Users', 'action' => 'login'];
@@ -65,11 +60,37 @@ class AppController extends Controller {
         	]
         ];
         $this->Auth->unauthorizedRedirect = ['controller' => 'Users' , 'action' => 'index'];
+        // Check if you're logged in
+        if ( $this->Auth->user() ) {
+            // Display array of user related data
+//            debug($this->ProjectAllocation->findAllByUserId($this->Auth->user('id')));
+//            debug($this->TaskAllocation->findAllByUserId($this->Auth->user('id')));
+//            debug($this->User->findAllById($this->Auth->user('id')));
+//            debug($this->User->findAllById($this->Auth->user('id')));
+            $this->Auth->allow(
+                [
+                    'controller' => 'Users',
+                    'action' => 'logout'
+                ],[
+                    'controller' => 'Users',
+                    'action' => 'index'
+                ]
+            );
 
-        $this->Auth->allow('index', 'login');
+            $this->set('currentUser',$this->Auth->user());
+        } else {
+            $this->Auth->allow(
+                [
+                    'controller' => 'Users',
+                    'action' => 'login'
+                ]
+            );
+        }
+
     }
 
-    public function isAuthorized() {
+    public function isAuthorized($user) {
+
         return true;
     }
 

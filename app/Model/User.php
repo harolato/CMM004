@@ -10,15 +10,21 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 class User extends Model {
 
     public $name = 'User';
-
-    public $hasMany = [
-        'Projects_allocations' => [
-            'className' => 'ProjectAllocation',
-            'foreignKey' => 'user_id'
-        ],
-        'Tasks_allocations' => [
-            'className' => 'TaskAllocation',
-            'foreignKey' => 'user_id'
+    public $primaryKey = 'id';
+    public $hasAndBelongsToMany = [
+      'Task' => [
+          'className' => 'Task',
+          'joinTable' => 'tasks_users',
+          'foreignKey' => 'user_id',
+          'associationForeignKey' => 'task_id',
+          'unique' => true
+      ],
+        'Project' => [
+            'className' => 'Project',
+            'joinTable' => 'projects_users',
+            'foreignKey' => 'user_id',
+            'associationForeignKey' => 'project_id',
+            'unique' => true
         ]
     ];
 

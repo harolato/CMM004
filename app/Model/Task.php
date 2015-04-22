@@ -11,10 +11,13 @@ class Task extends Model {
 
     public $name = 'Task';
 
-    public $belongsTo = [
-        'Tasks_allocations' => [
-            'className' => 'TaskAllocation',
-            'foreignKey' => 'task_id'
+    public $hasAndBelongsToMany = [
+        'User' => [
+            'className' => 'User',
+            'joinTable' => 'tasks_users',
+            'foreignKey' => 'task_id',
+            'associationForeignKey' => 'user_id',
+            'unique' => true
         ]
     ];
 

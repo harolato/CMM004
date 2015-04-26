@@ -27,7 +27,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-
+// Grabs css from webroot/css folder
 		echo $this->Html->css('bootstrap.min');
 
 		echo $this->fetch('css');
@@ -40,8 +40,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			<h1><?php echo $this->Html->link('Taskify', '/');?></h1>
 		</div>
 		<div id="content">
-
+<!-- Displays a message. error message etc. -->
 			<?php echo $this->Session->flash(); ?>
+<!-- Displays content. for example login page Users/login.ctp -->
 			<?php echo $this->fetch('content'); ?>
 		</div>
 		<div id="footer">
@@ -58,8 +59,10 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	</div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <?php
+    // grabs javascript from webroot/script folder
         echo $this->Html->script('bootstrap.min');
     ?>
+<!-- This line if for debugging sql -->
 	<?php echo $this->element('sql_dump'); ?>
 </body>
 </html>

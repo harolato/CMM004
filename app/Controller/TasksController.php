@@ -25,6 +25,7 @@ class TasksController extends AppController {
             $data['Task']['date_added'] = $currentDate;
             $this->Task->save($data);
         }
+
     }
 
 

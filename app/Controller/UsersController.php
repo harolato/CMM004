@@ -17,9 +17,10 @@ class UsersController extends AppController {
      */
     public function index() {
         $this->set('projects_users',$this->User->findAllById($this->Auth->user('id')));
+
     }
     /**
-     *   Create user action
+     *
      */
     public function create () {
         // Check if we have POST request

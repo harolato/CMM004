@@ -22,47 +22,69 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php echo $cakeDescription ?>:
+
 		<?php echo $this->fetch('title'); ?>
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
 // Grabs css from webroot/css folder
 		echo $this->Html->css('bootstrap.min');
+		echo $this->Html->css('style');
+
 
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link('Taskify', '/');?></h1>
-		</div>
-		<div id="content">
-<!-- Displays a message. error message etc. -->
-			<?php echo $this->Session->flash(); ?>
-<!-- Displays content. for example login page Users/login.ctp -->
-			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);
-			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
-		</div>
-	</div>
+	<nav class="navbar navbar-default" role="navigation">
+    			<div class="navbar-header">
+    				<a class="navbar-brand" href="
+    					<?php  if (AuthComponent::user('id')):
+    						echo Router::url('/');
+    						echo 'Users';
+    					else:
+    						echo Router::url('/');
+						endif;
+    					?>
+    					">Taskbook/Taskify
+    				</a>
+    			</div>
+
+    			<div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="#">
+                        	<?php if (AuthComponent::user('id')): ?>
+                               <?= AuthComponent::user('name') ?>
+                               ,
+                               <?= AuthComponent::user('role') ?>
+                            <?php endif; ?>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                      <li><?php
+                      		if (AuthComponent::user('id')):
+                      		echo $this->Html->link('Log out',array(
+                                                                     'controller' => 'Users',
+                                                                     'action' => 'logout'
+                                                                 ));
+                            endif;
+                      		?>
+                      </li>
+                    </ul>
+                  </div>
+    		</nav>
+    		<div id="content-wrapper">
+    			<?php echo $this->fetch('content'); ?>
+    		</div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	
     <?php
     // grabs javascript from webroot/script folder
         echo $this->Html->script('bootstrap.min');
     ?>
-<!-- This line if for debugging sql -->
-	<?php echo $this->element('sql_dump'); ?>
+
 </body>
 </html>

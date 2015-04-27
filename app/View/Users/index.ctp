@@ -1,17 +1,20 @@
-<div class="jumbotron">
-    <h1>Hi, <?php echo AuthComponent::user('name');?>!</h1>
-    <p>Here are your projects:</p>
+<div id="project-list" class="jumbotron">
+    <h2>Hi, <?php echo AuthComponent::user('name');?>!</h2>
+    <h4>Your projects:</h4>
+    <ul class="list-group">
     <?php
         foreach( $projects_users[0]['Project'] as &$project ) {
             ?>
-            <p><?php echo $this->Html->link($project['name'],[
+            <li class="list-group-item"><?php echo $this->Html->link($project['name'],[
                         'controller' => 'Projects',
                         $project['id']
                     ],[
                         'class' => 'btn btn-primary btn-md',
                         'role' => 'button'
-                    ]);?></p>
+                    ]);?>
+             </li>
             <?php
         }
     ?>
+    </ul>
 </div>

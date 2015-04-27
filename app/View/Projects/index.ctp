@@ -1,44 +1,50 @@
 
 <div class="row">
-    <div class="col-xs-5 "><h2><?php echo $project_title['Project']['name'];?></h2></div>
-    <div class="col-xs-7 "><?php echo $this->Html->link('Burndown chart', [
+    <div class="col-md-12 "><h2>Project title: <?php echo $project_title['Project']['name'];?></h2></div>
+    <div class="col-md-12 "><?php echo $this->Html->link('Burndown chart', [
             'controller' => 'Pages',
             'action' => 'display',
             'burndown',$project_title['Project']['id']
         ],[
             'class' => 'btn btn-primary btn-large'
-        ]);?></div>
+        ]);?>
+        <button class="btn btn-primary btn-small">Add people</button>
+        <?php echo $this->Html->link('Add New Task', [
+                    'controller' => 'Tasks',
+                    'action' => 'add',
+                    $project_title['Project']['id']
+                ],[
+                    'class' => 'btn btn-md btn-primary'
+                ])?>
+    </div>
+
 </div>
 <br>
 <div class="row">
-    <div class="col-xs-2 text-left"><h3>People working on this project</h3></div>
-    <div class="col-xs-10 text-left"><button class="btn btn-primary btn-large">Add people</button></div>
+    <div class="col-md-12"><h3>Team members:</h3></div>
 </div>
-<table class="table table-bordered">
-    <tr>
-        <th>Name</th>
-        <th>Role</th>
-    </tr>
-    <?php
-        foreach($projectusers[0]['User'] as &$user ){
-            ?>
-            <tr>
-                <td><?php echo $user['name'];?></td>
-                <td><?php echo $user['ProjectsUser']['role'];?></td>
-            </tr>
-        <?php
-        }
-    ?>
-</table>
 <div class="row">
-    <div class="col-xs-1 text-left"><h3>List Of Tasks</h3></div>
-    <div class="col-xs-11 text-left"><?php echo $this->Html->link('Add New Task', [
-            'controller' => 'Tasks',
-            'action' => 'add',
-            $project_title['Project']['id']
-        ],[
-            'class' => 'btn btn-md btn-primary'
-        ])?></div>
+
+    <div class="col-md-6">
+        <table class="table table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Role</th>
+            </tr>
+            <?php foreach($projectusers[0]['User'] as &$user ){ ?>
+                    <tr>
+                        <td><?php echo $user['name'];?></td>
+                        <td><?php echo $user['ProjectsUser']['role'];?></td>
+                    </tr>
+                <?php
+                }
+            ?>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-left"><h3>Task list:</h3></div>
+
 </div>
 <table class="table table-hover table-bordered">
     <tr>
@@ -50,11 +56,7 @@
         <th>Person responsible</th>
         <th>Actions</th>
     </tr>
-<!--    <pre>-->
-<!--        --><?php
-//        print_r($tasks);
-//        ?>
-<!--    </pre>-->
+
 <?php
 foreach ($tasks as &$task) {
     if ( count($task['User']) > 0 ) {
@@ -105,7 +107,7 @@ foreach ($tasks as &$task) {
                 ]) :'');
 
             }
-            if ( $currentUser['id'] == @$task['User'][0]['id'] ) {
+            if ( $currentUser['id'] == @$task['User'][0]['id']) {
                 echo $this->Html->link(' <span class="glyphicon glyphicon-comment"></span>', [
                     'controller' => 'Tasks',
                     'action' => 'writeNote',

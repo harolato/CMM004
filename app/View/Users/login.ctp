@@ -1,4 +1,5 @@
-<div class="text-center">
+
+
 <?php
 /**
  * Created by PhpStorm.
@@ -8,17 +9,35 @@
  */
 
 // Create form header
-    echo $this->Form->create('User', ['controller' => 'Users', 'action' => 'login']);
-// Create username, in this case user ID, input. Usualy primary key inputs are hidden, so we force that input to be visible
-    echo $this->Form->input('id', [
-        'type' => 'text'
-    ]);
-// Password input
-    echo $this->Form->input('password');
-// Submit button
-    echo $this->Form->submit('Login',[
-        'class' => 'btn btn-primary'
-    ]);
+    echo $this->Form->create('User', ['controller' => 'Users', 'action' => 'login', 'class' => 'form-horizontal']);
+
+?>
+<fieldset>
+    <div class="form-group">
+    <label class="col-md-4 control-label" for="passwordinput"></label>
+      <div class="col-md-4">
+      <?php
+        echo $this->Form->input('id', ['placeholder' => 'id', 'class' => 'form-control input-md', 'type' => 'text']);
+      ?>
+      </div>
+    </div>
+    <div class="form-group">
+    <label class="col-md-4 control-label" for="passwordinput"></label>
+        <div class="col-md-4">
+          <?php
+            echo $this->Form->input('password', ['placeholder' => 'password', 'class' => 'form-control input-md']);
+          ?>
+          </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="loginbutton"></label>
+      <div class="col-md-4">
+        <?php
+            echo $this->Form->submit('Login',['class' => 'btn btn-primary']);
+         ?>
+      </div>
+    </div>
+</fieldset>
+<?php
     echo $this->Form->end();
 ?>
-</div>
